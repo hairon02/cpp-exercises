@@ -4,9 +4,9 @@
 using namespace std;
 
 int main(){
-    int letras1[]={'a','b','c','d','e'};
-    int letras2[]={'q','w','e','r','t'};
-    int letras3[10];
+    char letras1[]={'a','b','c','d','e'};
+    char letras2[]={'q','w','e','r','t'};
+    char letras3[10];
 
     for(int i=0; i<5; i++)
         letras3[i] = letras1[i];
