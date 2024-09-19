@@ -8,10 +8,15 @@ struct Node{
 };
 
 void insertList(Node *&, int); // Insert value in sort
+void showList(Node *);
 
 int main(){
     Node *list = NULL;
 
+    insertList(list, 8);
+    insertList(list, 10);
+    insertList(list, 9);
+    showList(list);
     getch();
     return 0;
 }
@@ -33,5 +38,14 @@ void insertList(Node *&list, int n){
     else // No se encuentra en list, esta en medio o al final.
         aux2->next = new_node;
     
-    new_node = aux1;
+    new_node->next = aux1;
 }
+
+void showList(Node *list){
+    Node *p = list;
+
+    while(p != NULL){
+        cout << p->value << endl;
+        p = p->next;
+    }
+} 
