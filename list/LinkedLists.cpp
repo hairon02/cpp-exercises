@@ -18,6 +18,9 @@ int value_at(Node *, int);
 void pushFront(Node *&, int);
 int popFront(Node *&);
 void pushBack(Node *&, int);
+int popBack(Node *&);
+int front(Node *);
+int back(Node *);
 
 Node *list = NULL;
 
@@ -45,7 +48,9 @@ void menu(){
 		cout << "7.- Push front"<<endl;
 		cout << "8.- Pop front"<<endl;
 		cout << "9.- Push Back"<<endl;
-
+        cout << "10.- Pop Back" << endl;
+        cout << "11.- Front" << endl;
+        cout << "12.- Back" << endl;
         cout << "Opcion: "; 
         cin >> option;
 
@@ -78,7 +83,7 @@ void menu(){
                     break;
             case 8: value = popFront(list);
                     if(value == -1)
-                        cout << "Lista vacia" << endl;
+                        cout << "Lista vacia, no se puede eliminar elementos" << endl;
                     else    
                         cout << "Valor eliminado: " << value << endl;
                     break;
@@ -86,10 +91,29 @@ void menu(){
                     cin >> value;
                     pushBack(list, value);
                     break;
-
+            case 10: value = popBack(list);
+                    if(value == -1)
+                        cout << "Lista vacia, no se puede eliminar elementos" << endl;
+                    else    
+                        cout << "Valor eliminado: " << value << endl;
+                    break;
+            case 11: value = front(list);
+                    if(value == -1)
+                        cout << "Lista vacia" << endl;
+                    else
+                        cout << "Front: " << front(list) << endl;
+                    break;
+            case 12: value = back(list);
+                    if(value == -1)
+                        cout << "Lista vacia" << endl;
+                    else
+                    cout << "Back: " << back(list) << endl;
+                    break;
         }
+
         cout << "Presiona una tecla para continuar..." << endl;
-        getch();
+        if(option != 0)
+            getch();
         system("cls");
     }while(option != 0);
 }
@@ -152,7 +176,7 @@ int size(Node *list){
 }
 
 bool empty(Node *list){
-    return size(list) == 0;
+    return list == NULL;
 }
 
 int value_at(Node *list, int index){
@@ -184,7 +208,7 @@ int popFront(Node *&list){
     int value = list->value;
 
     list = list->next;
-    delete[] aux;
+    delete aux;
 
     return value;
 }
@@ -206,4 +230,42 @@ void pushBack(Node *&list, int value){
         aux2->next = new_node;
     
     new_node->next = NULL;
+}
+
+int popBack(Node *&list){
+    if(empty(list))
+        return -1;
+
+    Node *aux1 = list;
+    Node *aux2;
+    int item;
+
+    while(aux1->next != NULL){
+        aux2 = aux1;
+        aux1 = aux1->next;
+    }
+
+    item = aux1->value;
+    aux2->next = NULL;
+    delete aux1;
+
+    return item;   
+}
+
+int front(Node *list){
+    if(empty(list))
+        return -1;
+    return list->value;
+}
+
+int back(Node *list){
+    if(empty(list))
+        return -1;
+    
+    Node *aux = list;
+
+    while(aux->next != NULL)
+        aux = aux->next;
+
+    return aux->value;
 }
