@@ -21,6 +21,7 @@ void pushBack(Node *&, int);
 int popBack(Node *&);
 int front(Node *);
 int back(Node *);
+int insertIndex(Node *&, int, int);
 
 Node *list = NULL;
 
@@ -35,7 +36,7 @@ int main(){
 }
 
 void menu(){
-    int option, value;
+    int option, value, index;
     do{
         cout << "Menu"<<endl;
 		cout << "0.- Salir"<<endl;
@@ -51,6 +52,8 @@ void menu(){
         cout << "10.- Pop Back" << endl;
         cout << "11.- Front" << endl;
         cout << "12.- Back" << endl;
+        cout << "13.- Insert Index" << endl;
+
         cout << "Opcion: "; 
         cin >> option;
 
@@ -109,6 +112,14 @@ void menu(){
                     else
                     cout << "Back: " << back(list) << endl;
                     break;
+            case 13: cout << "Index: "; 
+                    cin >> index;
+                    cout << endl << "Value: ";
+                    cin >> value;
+                    if(insertIndex(list, value, index) == 1)
+                        cout << "Valor insertado" << endl;
+                    else    
+                        cout << "No se pudo insertar" << endl;
         }
 
         cout << "Presiona una tecla para continuar..." << endl;
@@ -268,4 +279,27 @@ int back(Node *list){
         aux = aux->next;
 
     return aux->value;
+}
+
+int insertIndex(Node *&list, int value, int index){
+    if(index < 0 || index >= size(list))
+        return -1;
+    Node *new_node = new Node();
+    Node *aux1 = list;
+    Node *aux2;
+
+    new_node->value = value;
+
+    for(int i=0; i < index; ++i){
+        aux2 = aux1;
+        aux1 = aux1->next;
+    }
+
+    if(list == aux1)
+        list = new_node;
+    else
+        aux2->next = new_node;
+    new_node->next = aux1;
+
+    return 1;
 }
