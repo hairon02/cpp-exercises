@@ -24,6 +24,7 @@ int back(Node *);
 int insertIndex(Node *&, int, int);
 int erase(Node *&, int);
 int valueNfromEnd(Node *, int);
+int remove(Node *&);
 
 Node *list = NULL;
 
@@ -53,6 +54,7 @@ void menu(){
         cout << "13.- Insert Index" << endl;
         cout << "14.- Erase" << endl;
         cout << "15.- Value n from end" << endl;
+        cout << "16.- reverse" << endl;
         cout << "Opcion: "; 
         cin >> option;
 
@@ -138,6 +140,16 @@ void menu(){
                         cout << "Lista vacia" << endl;
                     if(value!= -1 && value != 0)    
                         cout << "Elemento en el indice " << index << ": "<< value << endl;
+                    break;
+            case 16: value = remove(list);
+                    if(value == -1)
+                        cout << "La lista tiene un solo elemento" << endl;
+                    if(value == 0)
+                        cout << "Lista vacia" << endl;
+                    if(value!= -1 && value != 0){    
+                        cout << "Lista al reverso: " << endl;
+                        showList(list);
+                    }
                     break;
         }
 
@@ -361,4 +373,25 @@ int valueNfromEnd(Node *list, int index){
         aux = aux->next; 
     
     return aux->value;
+}
+
+int remove(Node *&list){
+    if(empty(list))
+        return 0;
+    if(list->next == NULL)
+        return -1;
+    
+    Node *prev = NULL;
+    Node *actual = list;
+    Node *next = NULL;
+
+    while(actual != NULL){
+        next = actual->next;
+        actual->next = prev;
+        prev = actual;
+        actual = next;
+    }
+
+    list = prev;
+    return 1;
 }
