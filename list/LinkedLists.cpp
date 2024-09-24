@@ -22,16 +22,14 @@ int popBack(Node *&);
 int front(Node *);
 int back(Node *);
 int insertIndex(Node *&, int, int);
+int erase(Node *&, int);
+int valueNfromEnd(Node *, int);
 
 Node *list = NULL;
 
 int main(){
 
     menu();
-    /*insertList(list, 8);
-    insertList(list, 10);
-    insertList(list, 9);
-    showList(list);*/
     return 0;
 }
 
@@ -53,7 +51,8 @@ void menu(){
         cout << "11.- Front" << endl;
         cout << "12.- Back" << endl;
         cout << "13.- Insert Index" << endl;
-
+        cout << "14.- Erase" << endl;
+        cout << "15.- Value n from end" << endl;
         cout << "Opcion: "; 
         cin >> option;
 
@@ -120,6 +119,26 @@ void menu(){
                         cout << "Valor insertado" << endl;
                     else    
                         cout << "No se pudo insertar" << endl;
+            case 14: cout << "Index: ";
+                    cin >> index;
+                    value = erase(list, index);
+                    if(value == -1)
+                        cout << endl << "Lista vacia" << endl;
+                    if(value == 0)
+                        cout << endl << "Index fuera de rango" << endl;
+                    else    
+                        cout << endl << "Elemento en el indice " << index <<" eliminado." << endl;
+                    break;
+            case 15: cout << "Index: ";
+                    cin >> index;
+                    value = valueNfromEnd(list, index);
+                    if(value == -1)
+                        cout << "Index fuera de rango" << endl;
+                    if(value == 0)
+                        cout << "Lista vacia" << endl;
+                    if(value!= -1 && value != 0)    
+                        cout << "Elemento en el indice " << index << ": "<< value << endl;
+                    break;
         }
 
         cout << "Presiona una tecla para continuar..." << endl;
@@ -302,4 +321,44 @@ int insertIndex(Node *&list, int value, int index){
     new_node->next = aux1;
 
     return 1;
+}
+
+int erase(Node *&list, int index){
+    if(empty(list))
+        return -1;
+    if(index < 0 || index >= size(list))
+        return 0;
+
+    Node *aux1 = list;
+    Node *aux2;
+
+    for(int i= 0; i < index; ++i){
+        aux2 = aux1;
+        aux1 = aux1->next;
+    }
+
+    if(list == aux1)
+        list = list->next;
+    else
+        aux2->next = aux1->next;
+    
+    delete aux1;
+
+    return 1;
+}
+
+int valueNfromEnd(Node *list, int index){
+    if(empty(list))
+        return 0;
+
+    int sizex = size(list);
+    if(index < 0 || index >= sizex || sizex - 1 - index < 0)
+        return -1;
+
+    Node * aux = list;
+
+    for(int i = 0; i < sizex - 1 - index; ++i)
+        aux = aux->next; 
+    
+    return aux->value;
 }
