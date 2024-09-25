@@ -24,8 +24,8 @@ int back(Node *);
 int insertIndex(Node *&, int, int);
 int erase(Node *&, int);
 int valueNfromEnd(Node *, int);
-int remove(Node *&);
-
+int reverse(Node *&);
+int removeValue(Node *&, int);
 Node *list = NULL;
 
 int main(){
@@ -55,6 +55,7 @@ void menu(){
         cout << "14.- Erase" << endl;
         cout << "15.- Value n from end" << endl;
         cout << "16.- reverse" << endl;
+        cout << "17.- removeValue" << endl;
         cout << "Opcion: "; 
         cin >> option;
 
@@ -141,7 +142,7 @@ void menu(){
                     if(value!= -1 && value != 0)    
                         cout << "Elemento en el indice " << index << ": "<< value << endl;
                     break;
-            case 16: value = remove(list);
+            case 16: value = reverse(list);
                     if(value == -1)
                         cout << "La lista tiene un solo elemento" << endl;
                     if(value == 0)
@@ -150,6 +151,16 @@ void menu(){
                         cout << "Lista al reverso: " << endl;
                         showList(list);
                     }
+                    break;
+            case 17: cout << "Value: ";
+                    cin >> value;
+                    value = removeValue(list, value);
+                    if(value == 0)
+                        cout << "Lista vacia" << endl;
+                    else if(value == -1)
+                        cout << "No se encontro el elemento" << endl;
+                    else
+                        cout << "Se elimino correctamente" << endl;
                     break;
         }
 
@@ -375,7 +386,7 @@ int valueNfromEnd(Node *list, int index){
     return aux->value;
 }
 
-int remove(Node *&list){
+int reverse(Node *&list){
     if(empty(list))
         return 0;
     if(list->next == NULL)
@@ -393,5 +404,34 @@ int remove(Node *&list){
     }
 
     list = prev;
+    return 1;
+}
+
+int removeValue(Node *&list, int value){
+    if(empty(list))
+        return 0;
+
+    bool flag = false;
+    Node *aux1 = list;
+    Node *aux2;
+
+    while(aux1 != NULL && flag == false){
+        if(aux1->value == value)
+            flag = true;
+        else{
+            aux2 = aux1;    
+            aux1 = aux1->next;
+        }
+    }
+
+    if(flag == false)
+        return -1;
+
+    if(list == aux1)
+        list = list->next;
+    else    
+        aux2->next = aux1->next;
+    
+    delete aux1;
     return 1;
 }
