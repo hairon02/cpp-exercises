@@ -10,6 +10,7 @@ struct Node{
 
 void insertNode(Node *&, Node *&, int);
 bool colaVacia(Node *);
+void deleteNode(Node *&, Node *&, int &);
 
 int main(){
     Node *frente = nullptr;
@@ -19,6 +20,16 @@ int main(){
     cout << "Digite un numero: ";
     cin >> dato;
     insertNode(frente, fin, dato);
+
+    while(frente != nullptr){
+        deleteNode(frente, fin, dato);
+
+        if(frente != nullptr)
+            cout << dato << " -> ";
+        else    
+            cout << dato << "-> NULL" << endl; 
+    }
+    
     getch();
 
     return 0;
@@ -46,4 +57,17 @@ void insertNode(Node *&frente, Node *&fin, int n){
 
 bool colaVacia(Node *p){
     return (p == nullptr)? true : false;
+}
+
+void deleteNode(Node *&frente, Node *&fin, int &n){
+    n = frente->dato;
+    Node *aux = frente;
+
+    if(frente==fin){
+        frente = nullptr;
+        fin = nullptr;
+    }
+    else
+        frente = frente->siguiente;
+    delete aux;
 }
