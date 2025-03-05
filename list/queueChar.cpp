@@ -61,6 +61,7 @@ void menu(){
     }while(option != 3);
 }
 
+// enqueue: O(1) (amortizado, Lista enlazada y arreglo [sondaje])
 void insertNode(Node *&start, Node *&end, char value){
     Node *newNode = new Node();
 
@@ -74,10 +75,12 @@ void insertNode(Node *&start, Node *&end, char value){
     end = newNode;
 }
 
+// empty: O(1) (Lista enlazada y arreglo)
 bool isEmpty(Node *p){
     return (p == nullptr)? true : false;
 }
 
+// dequeue: O(1) (Lista enlazada y arreglo)
 void deleteNode(Node *&start, Node *&end, char &value){
     value = start->value;
     Node *aux = start;
