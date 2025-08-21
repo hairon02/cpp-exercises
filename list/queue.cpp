@@ -12,6 +12,7 @@ void insertNode(Node *&, Node *&, int);
 bool colaVacia(Node *);
 void deleteNode(Node *&, Node *&, int &);
 
+
 int main(){
     Node *frente = nullptr;
     Node *fin = nullptr;
@@ -71,3 +72,5 @@ void deleteNode(Node *&frente, Node *&fin, int &n){
         frente = frente->siguiente;
     delete aux;
 }
+
+

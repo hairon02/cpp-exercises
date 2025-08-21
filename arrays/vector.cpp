@@ -1,3 +1,4 @@
+// Dynamic Array Implemented with a static array
 #include<iostream>
 #include<conio.h>
 using namespace std;
@@ -49,7 +50,7 @@ class Vector{
 
         void push(int item){
             if(size_ == capacity_)
-                resize(capacity_*2);
+                resize(capacity_*2); 
             
             *(data + size_) = item;
             size_++;                
@@ -62,7 +63,7 @@ class Vector{
             if(size_ == capacity_)
                 resize(capacity_*2);
 
-            for(int i = size_; i > index; --i)
+             for(int i = size_; i > index; --i)
                 *(data + i) = *(data + i - 1);
             
             *(data + index) = item;
@@ -112,6 +113,11 @@ class Vector{
                     return i;
             return -1;
         }
+
+        void printxd(){
+            for(int i = 0; i < size_; i++)
+                cout << "[" << i << "] = " << *(data + i) << endl;
+        }
 };
 
 int main(){
@@ -128,9 +134,23 @@ int main(){
         cout << "Arr["<<"i"<<"] = " << arr.at(i) << endl;
     cout << "Capacity: " << arr.capacity() << endl;
      cout << "Pop, item: " << arr.pop() << endl;
+     cout << "Pop, item: " << arr.pop() << endl;
+
     cout << "Capacity: " << arr.capacity() << endl;
+    cout << "Size: " << arr.size() << endl;
+    arr.push(4);
+    
+    cout << "Imprimir" << endl;
+    arr.printxd();
+    arr.insert(2,12);
+    
+    cout << "Imprimir" << endl;
+    arr.printxd();
+    cout << "Delete" << endl;
+    arr.delete_at(0);
 
+    arr.printxd();
 
-
+ 
 
 }

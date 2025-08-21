@@ -183,7 +183,7 @@ void insertList(Node *&list, int n){
         aux1 = aux1->next;
     }
 
-    if(list == aux1)    // No entro al ciclo while. La lista esta vacio o el primer valor es mayor a n.
+    if(list == aux1)    // No entro al ciclo while. La lista esta vacio o el primer valor es menor a n.
         list = new_node;
     else // No se encuentra en list, esta en medio o al final.
         aux2->next = new_node;
@@ -269,20 +269,18 @@ int popFront(Node *&list){
 void pushBack(Node *&list, int value){
     Node *new_node = new Node();
     new_node->value = value;
-
-    Node *aux1 = list;
-    Node *aux2;
-    
-    while(aux1 !=NULL){
-        aux2 = aux1;
-        aux1 = aux1->next;
-    }
-    if(list == aux1)
-        list = new_node;
-    else
-        aux2->next = new_node;
-    
     new_node->next = NULL;
+
+    if (list == NULL)
+        list = new_node;
+    else {
+        Node *current = list;
+        while (current->next != nullptr)
+            current = current->next;
+        
+        current->next = new_node;
+    }
+    
 }
 
 int popBack(Node *&list){
@@ -411,21 +409,13 @@ int removeValue(Node *&list, int value){
     if(empty(list))
         return 0;
 
-    bool flag = false;
     Node *aux1 = list;
     Node *aux2;
 
-    while(aux1 != NULL && flag == false){
-        if(aux1->value == value)
-            flag = true;
-        else{
-            aux2 = aux1;    
-            aux1 = aux1->next;
-        }
+    while(aux1 != NULL && aux1->value != value){
+        aux2 = aux1;    
+        aux1 = aux1->next;
     }
-
-    if(flag == false)
-        return -1;
 
     if(list == aux1)
         list = list->next;
